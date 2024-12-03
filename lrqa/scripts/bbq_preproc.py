@@ -1,7 +1,9 @@
 import argparse
 import os
 import datasets
-import lrqa.utils.io_utils as io
+import sys
+sys.path.append('/home/juaekim/storage/bias_supplementary_BBQ_acc/LRQA')
+import LRQA.lrqa.utils.io_utils as io
 
 LABEL_TO_ID_DICT = {"A": 0, "B": 1, "C": 2, "D": 3}
 CATEGORIES = [

@@ -5,9 +5,14 @@ import torch
 from typing import Optional
 from dataclasses import dataclass, field
 
+import sys
+sys.path.append('/home/juaekim/storage/bias_supplementary_BBQ_acc/LRQA')
+from LRQA.unlog_roberta_head import UnLogRobertaForMultipleChoice
+
 from transformers import (
     AutoConfig,
-    AutoModelForMultipleChoice,
+    RobertaTokenizer,
+#    AutoModelForMultipleChoice,
     AutoModelForCausalLM,
     AutoTokenizer,
     HfArgumentParser,
@@ -121,7 +126,7 @@ def main():
         cache_dir=model_args.cache_dir,
         revision=model_args.model_revision,
     )
-    tokenizer = AutoTokenizer.from_pretrained(
+    tokenizer = RobertaTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
         cache_dir=model_args.cache_dir,
         use_fast=model_args.use_fast_tokenizer,
@@ -130,7 +135,7 @@ def main():
     adjust_tokenizer(tokenizer)
     if model_args.model_mode == "mc":
         torch_dtype = torch.float16 if model_args.torch_dtype_fp16 else None
-        model = AutoModelForMultipleChoice.from_pretrained(
+        model = UnLogRobertaForMultipleChoice.from_pretrained(
             model_args.model_name_or_path,
             from_tf=bool(".ckpt" in model_args.model_name_or_path),
             config=config,
