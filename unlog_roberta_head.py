@@ -6,7 +6,7 @@ from transformers import RobertaModel, RobertaPreTrainedModel
 from transformers.modeling_outputs import MultipleChoiceModelOutput
 
 
-class UnLogForMultipleChoice(RobertaPreTrainedModel):
+class UnLogRobertaForMultipleChoice(RobertaPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
 
